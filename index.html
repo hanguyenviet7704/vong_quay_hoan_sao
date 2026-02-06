@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vòng Quay May Mắn - VinFast</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="effects-layer"></div>
+    <div class="bg-effect">
+        <!-- JS will populate particles or just CSS bubbles -->
+    </div>
+
+    <div class="glow-overlay"></div>
+
+    <div class="game-container">
+        <header>
+            <h1>Vòng Quay May Mắn</h1>
+            <p>Xin chào: Bạn Khách Hàng Thân Thiết</p>
+        </header>
+
+        <div class="wheel-wrapper">
+            <div class="wheel-container">
+                <canvas id="wheelCanvas" width="500" height="500"></canvas>
+                <!-- Central Pin -->
+                <div class="center-pin"></div>
+            </div>
+            <!-- Pointer -->
+            <div class="pointer">
+                <img src="dragon_pointer.png" alt="Pointer" />
+            </div>
+        </div>
+
+        <button id="spinBtn" class="spin-button">QUAY NGAY</button>
+
+        <!-- Coins decoration -->
+        <div class="coin coin-1"></div>
+        <div class="coin coin-2"></div>
+        <div class="coin coin-3"></div>
+    </div>
+
+    <!-- Prize Popup -->
+    <div id="prizePopup" class="popup-overlay hidden">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>CHÚC MỪNG!</h2>
+            </div>
+            <div class="popup-body">
+                <img id="prizeImage" src="" alt="Phần Quà" class="prize-image">
+                <p>Bạn đã trúng:</p>
+                <h3 id="prizeName">Tên Phần Quà</h3>
+                <p class="note">Vui lòng chụp màn hình và liên hệ nhân viên để nhận thưởng</p>
+            </div>
+            <button id="closePopup" class="popup-btn">NHẬN QUÀ</button>
+            <div id="confetti-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

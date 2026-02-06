@@ -1,0 +1,501 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #500;
+    background-image: url('tet_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+}
+
+/* Background & Effects */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #500;
+    background-image: url('tet_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+}
+
+/* Vignette for depth */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, rgba(50, 0, 0, 0.6) 80%, #1a0000 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Container for all bg effects */
+#effects-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bokeh-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4), rgba(255, 69, 0, 0.1));
+    filter: blur(10px);
+    opacity: 0.4;
+    animation: floatOrb 20s infinite linear;
+}
+
+@keyframes floatOrb {
+    0% {
+        transform: translateY(110vh) translateX(0) scale(1);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.5;
+    }
+
+    80% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(-20vh) translateX(50px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.falling-particle {
+    position: absolute;
+    top: -20px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.game-container {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+header {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #ffffff, #ffd700, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    filter: drop-shadow(0 2px 0px rgba(168, 0, 0, 1));
+}
+
+header p {
+    font-size: 1.3rem;
+    color: #ffd700;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 20px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Wheel Styles */
+.wheel-wrapper {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    margin: 0 auto 40px;
+    background: radial-gradient(circle, #FFECB3, #FFCA28, #FF6F00);
+    /* Soft Gold to Deep Orange */
+    border-radius: 50%;
+    padding: 15px;
+    /* Creates the outer frame thickness */
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        inset 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.wheel-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 10px solid #FFFFFF;
+    /* Inner White Ring */
+    outline: 8px solid #FBC02D;
+    /* Outer Gold Ring */
+    box-shadow:
+        inset 0 0 40px rgba(0, 0, 0, 0.4),
+        /* Inner Shadow for depth */
+        0 0 20px rgba(251, 192, 45, 0.6);
+    /* Outer Gold Glow */
+    position: relative;
+    overflow: hidden;
+    transition: transform 5s cubic-bezier(0.2, 0, 0.2, 1);
+    background: #fff;
+}
+
+/* Lights around the wheel (pseudo-elements) */
+.wheel-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    right: -25px;
+    bottom: -25px;
+    border-radius: 50%;
+    background: radial-gradient(transparent 60%, rgba(255, 215, 0, 0.8) 70%);
+    z-index: -1;
+    animation: rotateLight 10s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes rotateLight {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.center-pin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.center-pin::after {
+    /* Small highlight */
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 15px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.pointer {
+    position: absolute;
+    top: 50%;
+    right: -45px;
+    /* Adjust for larger dragon head */
+    transform: translateY(-50%);
+    width: 100px;
+    /* Increased size for dragon */
+    height: 80px;
+    z-index: 20;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+}
+
+.pointer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Mirror if necessary, but the provided image seems to point Left which is correct for Right-side placement */
+}
+
+/* Fallback */
+.pointer:empty::after {
+    content: '';
+    display: block;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 40px solid #ffd700;
+}
+
+
+/* Spin Button */
+.spin-button {
+    background: linear-gradient(to bottom, #ff3333, #aa0000);
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    padding: 18px 50px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow:
+        0 4px 0 #880000,
+        0 10px 20px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 51, 51, 0.4);
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.spin-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.spin-button:hover::before {
+    left: 100%;
+}
+
+.spin-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 0 #880000,
+        0 15px 25px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 51, 51, 0.6);
+}
+
+.spin-button:active {
+    transform: translateY(2px);
+    box-shadow:
+        0 2px 0 #880000,
+        0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .wheel-wrapper {
+        width: 320px;
+        height: 320px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .spin-button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Popup Styles */
+.hidden {
+    display: none !important;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #fff, #ffeebb);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    text-align: center;
+    padding: 0;
+    position: relative;
+    box-shadow:
+        0 0 0 5px #b30000,
+        0 0 30px rgba(255, 215, 0, 0.6);
+    transform: scale(0.8);
+    animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    overflow: hidden;
+}
+
+@keyframes popUp {
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.popup-header {
+    background: linear-gradient(to right, #d32f2f, #b30000);
+    padding: 20px;
+    color: #ffd700;
+    border-bottom: 4px solid #ffd700;
+}
+
+.popup-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.popup-body {
+    padding: 30px 20px;
+}
+
+.prize-image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+    animation: floatPrize 3s ease-in-out infinite;
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes floatPrize {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.popup-body p {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.popup-body h3 {
+    color: #d32f2f;
+    font-size: 1.8rem;
+    margin: 10px 0;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.popup-body .note {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.popup-btn {
+    background: linear-gradient(to bottom, #d32f2f, #9a0000);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+    transition: transform 0.2s;
+    border: 2px solid #ffd700;
+}
+
+.popup-btn:hover {
+    transform: scale(1.05);
+}
+
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
