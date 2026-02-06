@@ -1,7 +1,6 @@
 // Configuration prize list with image mapping
 // Harmonized Palette: Deep Rich Red (#B71C1C) & Premium Cream (#FFF9C4)
 const prizes = [
-    { text: "x2 Combo\nQuà Tặng", type: "text", color: "#B71C1C", textColor: "#FBC02D", img: "gift_combo.png" },
     { text: "x2 Thay Dầu\nMiễn Phí", type: "text", color: "#FFF9C4", textColor: "#B71C1C", img: "oil_bottle_gold.png" },
     { text: "x2 Thay Pin\nSmart Key", type: "text", color: "#B71C1C", textColor: "#FBC02D", img: "smart_key_fob.png" },
     { text: "Rửa Xe\nMiễn Phí", type: "text", color: "#FFF9C4", textColor: "#B71C1C", img: "vinfast_vf3.png" },
