@@ -123,6 +123,77 @@ body::after {
     pointer-events: none;
 }
 
+/* Sky Lanterns */
+.sky-lantern {
+    position: absolute;
+    background: radial-gradient(circle, #ffeb3b, #ff9800, #ff5722);
+    border-radius: 5px 5px 15px 15px;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+    opacity: 0.8;
+}
+
+.sky-lantern::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 20%;
+    width: 60%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Ambient Dust */
+.ambient-dust {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #FFF;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #FFF;
+    animation: twinkleDust 3s infinite alternate;
+}
+
+/* Firework Burst */
+.firework-burst {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    animation: explodeFirework 1.5s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Pulsing Glow around wheel */
+.wheel-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    height: 550px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    animation: pulseWheelGlow 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes pulseWheelGlow {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
 .game-container {
     text-align: center;
     position: relative;
@@ -261,14 +332,14 @@ canvas {
 .pointer {
     position: absolute;
     top: 50%;
-    right: -45px;
-    /* Adjust for larger dragon head */
+    right: -80px;
+    /* Position outside the wheel */
     transform: translateY(-50%);
-    width: 100px;
-    /* Increased size for dragon */
-    height: 80px;
+    width: 160px;
+    /* Large dragon */
+    height: 130px;
     z-index: 20;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.7));
 }
 
 .pointer img {

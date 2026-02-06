@@ -18,68 +18,116 @@ let startAngle = 0;
 function createBackgroundEffects() {
     const container = document.getElementById('effects-layer');
     if (!container) return;
-    container.innerHTML = ''; // Rest logic
+    container.innerHTML = ''; // Reset
 
-    // 1. Floating Bokeh Orbs (Large, Blur)
-    const orbCount = 15;
+    // 1. Floating Bokeh Orbs (Large, Blur) - Rising effect
+    const orbCount = 12;
     for (let i = 0; i < orbCount; i++) {
         const orb = document.createElement('div');
         orb.className = 'bokeh-orb';
-        const size = Math.random() * 100 + 50; // 50-150px
+        const size = Math.random() * 80 + 40; // 40-120px
         orb.style.width = size + 'px';
         orb.style.height = size + 'px';
         orb.style.left = Math.random() * 100 + 'vw';
-        orb.style.animationDuration = (Math.random() * 15 + 15) + 's'; // 15-30s
+        orb.style.animationDuration = (Math.random() * 15 + 15) + 's';
         orb.style.animationDelay = -(Math.random() * 20) + 's';
         container.appendChild(orb);
     }
 
-    // 2. Twinkling Sparkles (Small, Gold/White)
-    const sparkleCount = 30;
+    // 2. Twinkling Sparkles (Stars effect)
+    const sparkleCount = 40;
     for (let i = 0; i < sparkleCount; i++) {
         const spark = document.createElement('div');
         spark.className = 'sparkle';
         spark.style.left = Math.random() * 100 + 'vw';
         spark.style.top = Math.random() * 100 + 'vh';
         spark.style.animationDelay = (Math.random() * 3) + 's';
+        spark.style.animationDuration = (Math.random() * 2 + 2) + 's';
         container.appendChild(spark);
     }
 
     // 3. Falling Snow / Gold Dust
-    const particleCount = 60;
+    const particleCount = 50;
     for (let i = 0; i < particleCount; i++) {
         const p = document.createElement('div');
         p.className = 'falling-particle';
-
-        // Randomize
-        const isGold = Math.random() > 0.8; // Mostly snow, some gold
-        const size = Math.random() * 4 + 2; // 2-6px
-
+        const isGold = Math.random() > 0.7;
+        const size = Math.random() * 4 + 2;
         p.style.width = size + 'px';
         p.style.height = size + 'px';
         p.style.backgroundColor = isGold ? '#FFD54F' : '#ffffff';
-        p.style.boxShadow = isGold ? "0 0 4px #FFD54F" : "0 0 4px white";
+        p.style.boxShadow = isGold ? "0 0 6px #FFD54F" : "0 0 4px white";
         p.style.left = Math.random() * 100 + 'vw';
-        p.style.opacity = Math.random() * 0.5 + 0.3;
-
-        // Animation
-        const duration = Math.random() * 8 + 7; // 7-15s
+        p.style.opacity = Math.random() * 0.5 + 0.4;
+        const duration = Math.random() * 8 + 7;
         const delay = Math.random() * 5;
-
         p.style.animation = `fallDown ${duration}s linear infinite -${delay}s`;
-
         container.appendChild(p);
     }
 
-    // Inject keyframes
+    // 4. Rising Golden Bubbles (from bottom)
+    const bubbleCount = 20;
+    for (let i = 0; i < bubbleCount; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'rising-bubble';
+        const size = Math.random() * 15 + 8;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.random() * 100 + 'vw';
+        bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        bubble.style.animationDelay = -(Math.random() * 15) + 's';
+        container.appendChild(bubble);
+    }
+
+    // 5. Shooting Stars (occasional)
+    const starCount = 5;
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'shooting-star';
+        star.style.top = Math.random() * 50 + 'vh';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.animationDelay = (Math.random() * 10 + i * 3) + 's';
+        container.appendChild(star);
+    }
+
+    // 6. Floating Lanterns (small glowing squares)
+    const lanternCount = 8;
+    for (let i = 0; i < lanternCount; i++) {
+        const lantern = document.createElement('div');
+        lantern.className = 'floating-lantern';
+        lantern.style.left = Math.random() * 100 + 'vw';
+        lantern.style.animationDuration = (Math.random() * 20 + 25) + 's';
+        lantern.style.animationDelay = -(Math.random() * 20) + 's';
+        container.appendChild(lantern);
+    }
+
+    // Inject all keyframes
     if (!document.getElementById('bg-anim-style')) {
         const style = document.createElement('style');
         style.id = 'bg-anim-style';
         style.innerHTML = `
             @keyframes fallDown {
-                0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+                0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
                 10% { opacity: 0.8; }
-                100% { transform: translateY(110vh) translateX(${Math.random() * 40 - 20}px) rotate(360deg); opacity: 0; }
+                100% { transform: translateY(110vh) translateX(30px); opacity: 0; }
+            }
+            @keyframes riseUp {
+                0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+                20% { opacity: 0.6; }
+                80% { opacity: 0.6; }
+                100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+            }
+            @keyframes shootStar {
+                0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; width: 0; }
+                10% { opacity: 1; width: 80px; }
+                100% { transform: translateX(-300px) translateY(150px) rotate(-45deg); opacity: 0; width: 0; }
+            }
+            @keyframes floatLantern {
+                0% { transform: translateY(110vh) translateX(0) rotate(-5deg); opacity: 0; }
+                10% { opacity: 0.8; }
+                50% { transform: translateY(50vh) translateX(30px) rotate(5deg); }
+                90% { opacity: 0.8; }
+                100% { transform: translateY(-20vh) translateX(-20px) rotate(-5deg); opacity: 0; }
             }
         `;
         document.head.appendChild(style);
@@ -238,23 +286,47 @@ spinBtn.addEventListener('click', () => {
     spinBtn.disabled = true;
     spinBtn.style.filter = "grayscale(0.5)";
 
+    // Random winning segment
     const winningIndex = Math.floor(Math.random() * segments);
     const prize = prizes[winningIndex];
 
+    console.log("Winning Index:", winningIndex, "Prize:", prize.text);
+
     // Calculate rotation
+    // Pointer is on the RIGHT (0 degrees)
+    // Canvas draws segment 0 at the TOP (rotated by -90 degrees)
+    // Each segment spans (360 / segments) degrees
+
     const segmentAngleDeg = 360 / segments;
-    const currentSegmentPos = -90 + (winningIndex * segmentAngleDeg) + (segmentAngleDeg / 2);
-    let rotationNeeded = 90 - currentSegmentPos;
 
+    // Segment i's center is originally at: -90 + i*segmentAngle + segmentAngle/2
+    const segmentCenterAngle = -90 + (winningIndex * segmentAngleDeg) + (segmentAngleDeg / 2);
+
+    // To bring segment to 0 degrees (right side), total rotation needed is:
+    const targetTotalRotation = -segmentCenterAngle;
+
+    // Normalize target to 0-360 range
+    const targetMod = ((targetTotalRotation % 360) + 360) % 360;
+
+    // Current rotation normalized
+    const currentMod = ((currentRotation % 360) + 360) % 360;
+
+    // How much MORE we need to spin from current position to reach target
+    let additionalRotation = targetMod - currentMod;
+
+    // Ensure we spin forward (positive direction) by at least some amount
+    if (additionalRotation <= 0) {
+        additionalRotation += 360;
+    }
+
+    // Add 5-10 full spins for dramatic effect
     const fullSpins = 5 + Math.floor(Math.random() * 5);
+    additionalRotation += fullSpins * 360;
 
-    const targetRotationMod = (rotationNeeded % 360 + 360) % 360;
-    const currentMod = currentRotation % 360;
-    const distance = targetRotationMod - currentMod + (360 * fullSpins);
+    // Apply the rotation
+    currentRotation += additionalRotation;
 
-    const finalDist = distance > 0 ? distance : distance + 360;
-
-    currentRotation += finalDist;
+    console.log("Target:", targetMod, "Current:", currentMod, "Additional:", additionalRotation, "Final:", currentRotation);
 
     wheelContainer.style.transform = `rotate(${currentRotation}deg)`;
 
@@ -263,7 +335,7 @@ spinBtn.addEventListener('click', () => {
         spinBtn.disabled = false;
         spinBtn.style.filter = "none";
 
-        // Show Popup
+        // Show Popup with the pre-determined prize
         showPopup(prize);
         fireConfetti();
     }, 5000);
