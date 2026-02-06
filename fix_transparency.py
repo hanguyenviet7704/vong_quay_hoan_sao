@@ -1,57 +1,65 @@
 from PIL import Image
 import os
 
-def remove_light_background_aggressive(input_path, output_path):
-    """Aggressively remove white/light gray background including all light pixels"""
+def remove_checkerboard_or_light_bg(input_path):
+    """
+    Attempts to remove checkerboard patterns or light backgrounds.
+    Aggrresive mode: target common checkerboard grays and whites.
+    """
     try:
         img = Image.open(input_path).convert("RGBA")
         datas = img.getdata()
-        width, height = img.size
-
+        
         newData = []
         for item in datas:
             r, g, b, a = item
             
-            # Calculate brightness (average of RGB)
-            brightness = (r + g + b) / 3
+            # Brightness
+            brightness = (r + g + b) / 3.0
             
-            # Check if pixel is light colored (white, light gray, or near-white)
-            # Also check if it's a "grayish" pixel (low color saturation + high brightness)
-            max_rgb = max(r, g, b)
-            min_rgb = min(r, g, b)
-            saturation = max_rgb - min_rgb
+            # Saturation (Difference between max and min channel)
+            saturation = max(r, g, b) - min(r, g, b)
             
-            # Remove if:
-            # 1. Very bright (brightness > 200)
-            # 2. Low saturation (grayish) AND somewhat bright
-            if brightness > 200:
-                newData.append((255, 255, 255, 0))  # Fully transparent
-            elif brightness > 180 and saturation < 30:
-                newData.append((255, 255, 255, 0))  # Also transparent (gray pixels)
-            elif brightness > 160 and saturation < 20:
-                newData.append((255, 255, 255, 0))  # Very low saturation grays
+            is_transparent = False
+
+            # 1. White / Light
+            if brightness > 210:
+                is_transparent = True
+            
+            # 2. Common Transparency Grays (often around 204 or #CCCCCC, 192 or #C0C0C0)
+            # We catch anything gray-ish that is lighter than dark gray
+            elif brightness > 150 and saturation < 25:
+                 is_transparent = True
+
+            # 3. Specific check for "checkerboard gray" which is usually strictly neutral
+            elif saturation < 10 and brightness > 120:
+                # To avoid deleting black/dark gray objects, we keep > 120
+                is_transparent = True
+
+            if is_transparent:
+                newData.append((255, 255, 255, 0))
             else:
                 newData.append(item)
 
         img.putdata(newData)
-        img.save(output_path, "PNG")
-        print(f"Successfully cleaned background from {input_path}")
-        print(f"Saved to {output_path}")
+        # Save back to same path
+        img.save(input_path, "PNG")
+        print(f"Processed: {input_path}")
+        
     except Exception as e:
-        print(f"Error processing image: {e}")
+        print(f"Error processing {input_path}: {e}")
 
-# Re-download original and process
-# First, let's copy the original again
-source_file = "C:/Users/hanguyenviet/.gemini/antigravity/brain/994f0b1b-282a-47c2-8b60-42b60a1acd08/media__1770346828005.png"
-output_file = "dragon_pointer.png"
+images_to_fix = [
+    "oil_bottle_gold.png",
+    "smart_key_fob.png",
+    "vinfast_vf3.png",
+    "vinfast_scooter.png",
+    "red_envelope.png",
+    "gift_combo.png" 
+]
 
-if os.path.exists(source_file):
-    remove_light_background_aggressive(source_file, output_file)
-else:
-    # Try with existing file
-    if os.path.exists(output_file):
-        # Make a backup first
-        img = Image.open(output_file)
-        remove_light_background_aggressive(output_file, output_file)
+for img_name in images_to_fix:
+    if os.path.exists(img_name):
+        remove_checkerboard_or_light_bg(img_name)
     else:
-        print("No source file found!")
+        print(f"Skipping {img_name} (not found)")

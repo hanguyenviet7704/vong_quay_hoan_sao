@@ -262,8 +262,29 @@ spinBtn.addEventListener('click', () => {
     spinBtn.disabled = true;
     spinBtn.style.filter = "grayscale(0.5)";
 
-    // Random winning segment
-    const winningIndex = Math.floor(Math.random() * segments);
+    // Weighted winning segment
+    // Weights: Dán Nilong = 0, others = 20% (equal)
+    // Prizes array indices:
+    // 0: x2 Thay Dầu
+    // 1: x2 Thay Pin
+    // 2: Rửa Xe
+    // 3: Dán Nilong (Target to exclude)
+    // 4: Lì Xì
+    // 5: Nước Làm Mát
+
+    const weights = [20, 20, 20, 0, 20, 20]; // Total 100
+    let totalWeight = weights.reduce((a, b) => a + b, 0);
+    let randomVal = Math.random() * totalWeight;
+    let winningIndex = 0;
+
+    for (let i = 0; i < weights.length; i++) {
+        if (randomVal < weights[i]) {
+            winningIndex = i;
+            break;
+        }
+        randomVal -= weights[i];
+    }
+
     const prize = prizes[winningIndex];
 
     console.log("Winning Index:", winningIndex, "Prize:", prize.text);
