@@ -14,126 +14,103 @@ const segments = prizes.length;
 const arc = Math.PI * 2 / segments;
 let startAngle = 0;
 
-// Advanced Background Effects
+// Advanced Background Effects: Fireworks & Lanterns
 function createBackgroundEffects() {
     const container = document.getElementById('effects-layer');
     if (!container) return;
-    container.innerHTML = ''; // Reset
+    container.innerHTML = '';
 
-    // 1. Floating Bokeh Orbs (Large, Blur) - Rising effect
-    const orbCount = 12;
-    for (let i = 0; i < orbCount; i++) {
-        const orb = document.createElement('div');
-        orb.className = 'bokeh-orb';
-        const size = Math.random() * 80 + 40; // 40-120px
-        orb.style.width = size + 'px';
-        orb.style.height = size + 'px';
-        orb.style.left = Math.random() * 100 + 'vw';
-        orb.style.animationDuration = (Math.random() * 15 + 15) + 's';
-        orb.style.animationDelay = -(Math.random() * 20) + 's';
-        container.appendChild(orb);
-    }
-
-    // 2. Twinkling Sparkles (Stars effect)
-    const sparkleCount = 40;
-    for (let i = 0; i < sparkleCount; i++) {
-        const spark = document.createElement('div');
-        spark.className = 'sparkle';
-        spark.style.left = Math.random() * 100 + 'vw';
-        spark.style.top = Math.random() * 100 + 'vh';
-        spark.style.animationDelay = (Math.random() * 3) + 's';
-        spark.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        container.appendChild(spark);
-    }
-
-    // 3. Falling Snow / Gold Dust
-    const particleCount = 50;
-    for (let i = 0; i < particleCount; i++) {
-        const p = document.createElement('div');
-        p.className = 'falling-particle';
-        const isGold = Math.random() > 0.7;
-        const size = Math.random() * 4 + 2;
-        p.style.width = size + 'px';
-        p.style.height = size + 'px';
-        p.style.backgroundColor = isGold ? '#FFD54F' : '#ffffff';
-        p.style.boxShadow = isGold ? "0 0 6px #FFD54F" : "0 0 4px white";
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.opacity = Math.random() * 0.5 + 0.4;
-        const duration = Math.random() * 8 + 7;
-        const delay = Math.random() * 5;
-        p.style.animation = `fallDown ${duration}s linear infinite -${delay}s`;
-        container.appendChild(p);
-    }
-
-    // 4. Rising Golden Bubbles (from bottom)
-    const bubbleCount = 20;
-    for (let i = 0; i < bubbleCount; i++) {
-        const bubble = document.createElement('div');
-        bubble.className = 'rising-bubble';
-        const size = Math.random() * 15 + 8;
-        bubble.style.width = size + 'px';
-        bubble.style.height = size + 'px';
-        bubble.style.left = Math.random() * 100 + 'vw';
-        bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        bubble.style.animationDelay = -(Math.random() * 15) + 's';
-        container.appendChild(bubble);
-    }
-
-    // 5. Shooting Stars (occasional)
-    const starCount = 5;
-    for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'shooting-star';
-        star.style.top = Math.random() * 50 + 'vh';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.animationDelay = (Math.random() * 10 + i * 3) + 's';
-        container.appendChild(star);
-    }
-
-    // 6. Floating Lanterns (small glowing squares)
-    const lanternCount = 8;
+    // 1. Sky Lanterns (Lồng đèn bay)
+    const lanternCount = 20;
     for (let i = 0; i < lanternCount; i++) {
         const lantern = document.createElement('div');
-        lantern.className = 'floating-lantern';
+        lantern.className = 'sky-lantern';
+
+        // Random properties
+        const size = Math.random() * 20 + 15; // 15-35px
+        lantern.style.width = size + 'px';
+        lantern.style.height = (size * 1.4) + 'px';
         lantern.style.left = Math.random() * 100 + 'vw';
-        lantern.style.animationDuration = (Math.random() * 20 + 25) + 's';
-        lantern.style.animationDelay = -(Math.random() * 20) + 's';
+
+        // Staggered animation
+        const duration = Math.random() * 15 + 20; // 20-35s
+        const delay = Math.random() * -30; // Start at random positions
+        lantern.style.animation = `floatUpLantern ${duration}s linear infinite ${delay}s`;
+
         container.appendChild(lantern);
     }
 
-    // Inject all keyframes
+    // 2. Fireworks System
+    // Create initial burst immediately
+    createFirework(container);
+
+    // Then loop
+    setInterval(() => {
+        if (document.hidden) return; // Save performance
+        createFirework(container);
+    }, 1500); // New firework every 1.5s
+
+    // 3. Ambient Particles (Gold Dust)
+    const particleCount = 40;
+    for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement('div');
+        p.className = 'ambient-dust';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.top = Math.random() * 100 + 'vh';
+        p.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(p);
+    }
+
+    // Inject Styles for Animations
     if (!document.getElementById('bg-anim-style')) {
         const style = document.createElement('style');
         style.id = 'bg-anim-style';
         style.innerHTML = `
-            @keyframes fallDown {
-                0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
-                10% { opacity: 0.8; }
-                100% { transform: translateY(110vh) translateX(30px); opacity: 0; }
+            @keyframes floatUpLantern {
+                0% { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
+                10% { opacity: 0.9; }
+                50% { transform: translateY(50vh) translateX(20px) scale(0.8); }
+                100% { transform: translateY(-20vh) translateX(-20px) scale(0.6); opacity: 0; }
             }
-            @keyframes riseUp {
-                0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
-                20% { opacity: 0.6; }
-                80% { opacity: 0.6; }
-                100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+            @keyframes twinkleDust {
+                0%, 100% { opacity: 0.3; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.5); }
             }
-            @keyframes shootStar {
-                0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; width: 0; }
-                10% { opacity: 1; width: 80px; }
-                100% { transform: translateX(-300px) translateY(150px) rotate(-45deg); opacity: 0; width: 0; }
-            }
-            @keyframes floatLantern {
-                0% { transform: translateY(110vh) translateX(0) rotate(-5deg); opacity: 0; }
-                10% { opacity: 0.8; }
-                50% { transform: translateY(50vh) translateX(30px) rotate(5deg); }
-                90% { opacity: 0.8; }
-                100% { transform: translateY(-20vh) translateX(-20px) rotate(-5deg); opacity: 0; }
+            @keyframes explodeFirework {
+                0% { transform: scale(0.1); opacity: 1; }
+                20% { transform: scale(20); opacity: 1; }
+                100% { transform: scale(40); opacity: 0; }
             }
         `;
         document.head.appendChild(style);
     }
 }
 
+function createFirework(container) {
+    const firework = document.createElement('div');
+    firework.className = 'firework-burst';
+
+    // Position
+    const x = Math.random() * 80 + 10; // 10-90% width
+    const y = Math.random() * 50 + 5;  // 5-55% height (upper part)
+    firework.style.left = x + '%';
+    firework.style.top = y + '%';
+
+    // Color
+    const colors = ['#FFD700', '#FF4500', '#FF6347', '#FFFACD', '#00FF7F', '#00BFFF'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    firework.style.background = `radial-gradient(circle, #fff 10%, ${color} 60%, transparent 100%)`;
+    firework.style.boxShadow = `0 0 20px 10px ${color}, 0 0 40px 20px ${color}`;
+
+    container.appendChild(firework);
+
+    // Remove after animation
+    setTimeout(() => {
+        firework.remove();
+    }, 2000);
+}
+
+// Start Effects
 createBackgroundEffects();
 
 const canvas = document.getElementById('wheelCanvas');
