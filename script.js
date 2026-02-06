@@ -269,7 +269,7 @@ spinBtn.addEventListener('click', () => {
     console.log("Winning Index:", winningIndex, "Prize:", prize.text);
 
     // Calculate rotation
-    // Pointer is on the RIGHT (0 degrees)
+    // Pointer is on the LEFT (180 degrees)
     // Canvas draws segment 0 at the TOP (rotated by -90 degrees)
     // Each segment spans (360 / segments) degrees
 
@@ -278,8 +278,8 @@ spinBtn.addEventListener('click', () => {
     // Segment i's center is originally at: -90 + i*segmentAngle + segmentAngle/2
     const segmentCenterAngle = -90 + (winningIndex * segmentAngleDeg) + (segmentAngleDeg / 2);
 
-    // To bring segment to 0 degrees (right side), total rotation needed is:
-    const targetTotalRotation = -segmentCenterAngle;
+    // To bring segment to 180 degrees (left side), total rotation needed is:
+    const targetTotalRotation = 180 - segmentCenterAngle;
 
     // Normalize target to 0-360 range
     const targetMod = ((targetTotalRotation % 360) + 360) % 360;

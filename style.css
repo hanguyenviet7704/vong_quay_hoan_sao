@@ -306,9 +306,9 @@ canvas {
 .pointer {
     position: absolute;
     top: 50%;
-    right: -80px;
+    left: -80px;
     /* Position outside the wheel */
-    transform: translateY(-50%);
+    transform: translateY(-50%) scaleX(-1);
     width: 160px;
     /* Large dragon */
     height: 130px;
