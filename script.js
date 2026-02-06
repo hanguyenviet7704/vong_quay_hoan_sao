@@ -5,7 +5,7 @@ const prizes = [
     { text: "x2 Thay Pin\nSmart Key", type: "text", color: "#B71C1C", textColor: "#FBC02D", img: "smart_key_fob.png" },
     { text: "Rửa Xe\nMiễn Phí", type: "text", color: "#FFF9C4", textColor: "#B71C1C", img: "vinfast_vf3.png" },
     { text: "Dán Nilong\nXe Free", type: "text", color: "#B71C1C", textColor: "#FBC02D", img: "vinfast_scooter.png" },
-    { text: "Lì Xì\n50k-100k", type: "text", color: "#FFF9C4", textColor: "#D50000", img: "red_envelope.png" }, // Highlighted text
+    { text: "Lì Xì\n100k-1tr", type: "text", color: "#FFF9C4", textColor: "#D50000", img: "red_envelope.png" }, // Highlighted text
     { text: "Nước Làm Mát\nXe Máy", type: "text", color: "#B71C1C", textColor: "#FBC02D", img: "oil_bottle_gold.png" }
 ];
 
