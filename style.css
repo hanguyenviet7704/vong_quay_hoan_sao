@@ -544,3 +544,17 @@ canvas {
     height: 100%;
     pointer-events: none;
 }
+
+/* Watermark */
+.watermark {
+    position: fixed;
+    bottom: 15px;
+    right: 20px;
+    font-size: 0.85rem;
+    color: rgba(255, 215, 0, 0.6);
+    font-weight: 500;
+    letter-spacing: 1px;
+    z-index: 100;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
